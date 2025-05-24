@@ -1,9 +1,4 @@
 import { fetchProfile, ProfileData } from '@/app/core/Scrawler/profile';
-import axios from 'axios';
-
-const HUGGINGFACE_API_URL = 'https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta';
-
-const HUGGINGFACE_API_TOKEN = process.env.HUGGINGFACE_API_TOKEN as string;
 
 type TranslateResult = {
     text: string;
@@ -36,25 +31,6 @@ async function translateText(text: string, to: string): Promise<string> {
     return data.text;
 }
 
-async function queryLLM(prompt: string): Promise<string> {
-    if (!HUGGINGFACE_API_TOKEN) {
-        throw new Error('HUGGINGFACE_API_TOKEN is not set in environment variables');
-    }
-    const response = await axios.post(
-        HUGGINGFACE_API_URL,
-        { inputs: prompt },
-        {
-            headers: {
-                Authorization: `Bearer ${HUGGINGFACE_API_TOKEN}`,
-                'Content-Type': 'application/json',
-            },
-        }
-    );
-    if (response.data && Array.isArray(response.data)) {
-        return response.data[0]?.generated_text || '';
-    }
-    return '';
-}
 
 // Function to check if the question is asking for specific information
 function isSpecificInfoRequest(question: string): { isSpecific: boolean; type: string; key?: string } {
