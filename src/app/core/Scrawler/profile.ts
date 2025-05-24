@@ -1,16 +1,19 @@
 import axios from 'axios';
 
-// Define the profile data structure
-export type FeaturedProject = {
-    name: string;
-    description: string;
-    url: string;
-    image?: string;
-};
-
-export type Contact = {
+// Types for new API structure
+export type Social = {
     label: string;
     url: string;
+};
+
+export type HackClubInfo = {
+    image: string;
+    name: string;
+    description: string;
+};
+
+export type CollegeAppCountdown = {
+    until: string;
 };
 
 export type ProfileData = {
@@ -18,88 +21,66 @@ export type ProfileData = {
         name: string;
         age: number;
         bio: string[];
-        avatar?: string; // Optional profile picture
+        avatar?: string;
+        photo?: string;
+        flag?: string;
+        socials?: Social[];
+        hackclub?: HackClubInfo;
+        college_app_countdown?: CollegeAppCountdown;
     };
-    featuredProjects: FeaturedProject[];
-    contact: Contact[];
-    images?: { [key: string]: string }; // Optional map of image identifiers to URLs
+    featuredProjects: {
+        name: string;
+        description: string;
+        url: string;
+        image?: string;
+        type?: string[];
+    }[];
+    githubProjects?: {
+        id: number;
+        name: string;
+        description: string | null;
+        html_url: string;
+        stargazers_count: number;
+        language: string | null;
+        owner: {
+            avatar_url: string;
+        };
+        fork: boolean;
+        homepage: string | null;
+        topics: string[];
+    }[];
+    contact: {
+        icon?: string;
+        label: string;
+        subtitle?: string;
+        url: string;
+    }[];
+    images?: { [key: string]: string };
 };
 
-// Static profile data
-const profileData: ProfileData = {
-    profile: {
-        name: "Matheus Henrique",
-        age: 25,
-        bio: [
-            "Full-stack developer with expertise in React, Node.js, and TypeScript.",
-            "Passionate about creating intuitive and efficient web applications.",
-            "Currently working on personal projects and open to new opportunities."
-        ],
-        avatar: "https://github.com/theushen.png"
-    },
-    featuredProjects: [
-        {
-            name: "InTouchBot",
-            description: "A chatbot that provides information about me and my work.",
-            url: "https://github.com/theushen/InTouchBot",
-            image: "https://example.com/intouchbot.png"
-        },
-        {
-            name: "Portfolio Website",
-            description: "My personal portfolio website showcasing my projects and skills.",
-            url: "https://theushen.me",
-            image: "https://example.com/portfolio.png"
-        }
-    ],
-    contact: [
-        {
-            label: "GitHub",
-            url: "https://github.com/theushen"
-        },
-        {
-            label: "LinkedIn",
-            url: "https://linkedin.com/in/theushen"
-        },
-        {
-            label: "Email",
-            url: "mailto:contact@theushen.me"
-        }
-    ],
-    images: {
-        "profile": "https://github.com/theushen.png",
-        "project1": "https://example.com/intouchbot.png",
-        "project2": "https://example.com/portfolio.png"
-    }
-};
-
-// Function to fetch profile data from API (fallback)
-async function fetchProfileFromAPI() {
-    try {
-        const response = await axios.get('https://www.theushen.me/api/about');
-        return response.data;
-    } catch (error) {
-        console.error('Error fetching profile from API:', error);
-        return null;
-    }
-}
-
-// Export function to get profile data
+// Fetch profile data directly from API
 export async function fetchProfile(): Promise<ProfileData> {
     try {
-        // First try to use the static profile data
-        if (profileData) {
-            return profileData;
-        }
-        
-        // Fallback to API if static data is not available
-        const apiData = await fetchProfileFromAPI();
-        if (apiData) {
-            return apiData;
-        }
-        
-        throw new Error('Failed to fetch profile data');
+        const response = await axios.get('https://www.theushen.me/api/about');
+        const data = response.data;
+
+        // Normalize avatar/photo for compatibility
+        const avatar = data.profile.photo || data.profile.avatar;
+
+        // Add avatar and images fields for compatibility
+        return {
+            ...data,
+            profile: {
+                ...data.profile,
+                avatar,
+            },
+            images: {
+                profile: avatar,
+                ...(data.images || {}),
+            },
+        };
     } catch (error) {
-        console.error('Error:', error);
+        console.error('Error fetching profile from API:', error);
         throw error;
     }
 }

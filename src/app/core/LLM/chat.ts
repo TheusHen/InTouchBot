@@ -112,8 +112,7 @@ function handleSpecificRequest(profileData: ProfileData, requestInfo: { type: st
             return {
                 text:
                     `Hi there! If you're looking to get in touch with me, here are some options:\n\n`
-                    + profileData.contact.map(c => `- **${c.label}:** [${c.url.replace(/^mailto:/, '')}](${c.url})`).join('\n')
-                    + `\n\nWhich method do you prefer?`,
+                    + profileData.contact.map(c => `- **${c.label}:** [${c.url.replace(/^mailto:/, '')}](${c.url})`).join('\n'),
                 isMarkdown: true
             };
         case 'contact':
@@ -167,14 +166,12 @@ function handleSpecificRequest(profileData: ProfileData, requestInfo: { type: st
     return { text: '' }; // Empty response if no specific info found
 }
 
-function getOptions(profileData: ProfileData): string {
+function getOptions(): string {
     const options = [
-        'Projects',
+        'Main Projects',
         'About',
         'Contact',
         'Avatar',
-        ...(profileData.contact.map(c => c.label)),
-        ...(profileData.featuredProjects.map(p => p.name)),
     ];
     // Remove duplicates and empty
     const uniqueOptions = [...new Set(options.filter(Boolean))];
@@ -199,7 +196,7 @@ export async function chatWithProfileLLM(userQuestion: string): Promise<ChatResp
     }
 
     // If not a specific request or no specific info found, show options (fallback)
-    const optionsMessage = getOptions(profileData);
+    const optionsMessage = getOptions();
     let fallbackText = optionsMessage;
     if (userLang !== 'en') {
         fallbackText = await translateText(optionsMessage, userLang);
