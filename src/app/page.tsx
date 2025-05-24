@@ -7,6 +7,7 @@ import Image from "next/image";
 import Particles from "./componets/particles";
 import { chatWithProfileLLM } from "./core/LLM/chat";
 import ReactMarkdown from "react-markdown";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 type Message = {
     sender: "user" | "bot";
@@ -94,6 +95,7 @@ const InTouchBotPage = () => {
     return (
         <div className="relative flex flex-col w-full h-screen bg-gradient-to-tl from-black via-zinc-600/20 to-black overflow-hidden">
             <Particles className="absolute inset-0 -z-10 animate-fade-in" quantity={100} />
+            <SpeedInsights />
 
             {/* Header */}
             <div className="flex flex-col items-center w-full pt-8 pb-2">
