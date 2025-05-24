@@ -1,4 +1,4 @@
-import { fetchProfile, ProfileData, FeaturedProject, Contact } from '@/app/core/Scrawler/profile';
+import { fetchProfile, ProfileData } from '@/app/core/Scrawler/profile';
 import axios from 'axios';
 
 const HUGGINGFACE_API_URL = 'https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta';

@@ -51,7 +51,7 @@ const InTouchBotPage = () => {
                             isMarkdown: botResponse.isMarkdown,
                         },
                     ]);
-                } catch (error) {
+                } catch {
                     setConversation((conv) => [
                         ...conv,
                         { sender: "bot", message: "Sorry, something went wrong." },
@@ -81,7 +81,7 @@ const InTouchBotPage = () => {
                     isMarkdown: botResponse.isMarkdown,
                 },
             ]);
-        } catch (error) {
+        } catch {
             setConversation((conv) => [
                 ...conv,
                 { sender: "bot", message: "Sorry, something went wrong." },
@@ -135,13 +135,13 @@ const InTouchBotPage = () => {
                                         {msg.isMarkdown ? (
                                             <ReactMarkdown
                                                 components={{
-                                                    a: ({ node, ...props }) => (
+                                                    a: ({ ...props }) => (
                                                         // eslint-disable-next-line
                                                         <a {...props} target="_blank" rel="noopener noreferrer" className="underline text-blue-300" />
                                                     ),
-                                                    p: ({ node, ...props }) => <p {...props} className="mb-2" />,
-                                                    li: ({ node, ...props }) => <li {...props} className="ml-6 list-disc" />,
-                                                    strong: ({ node, ...props }) => <strong {...props} className="font-semibold" />,
+                                                    p: ({ ...props }) => <p {...props} className="mb-2" />,
+                                                    li: ({ ...props }) => <li {...props} className="ml-6 list-disc" />,
+                                                    strong: ({ ...props }) => <strong {...props} className="font-semibold" />,
                                                 }}
                                             >
                                                 {msg.message}
