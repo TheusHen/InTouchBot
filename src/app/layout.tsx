@@ -74,7 +74,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="floating-input-bar">
+        <div className="chat-container">
           {children}
         </div>
       </body>

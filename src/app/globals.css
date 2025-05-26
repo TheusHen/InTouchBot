@@ -28,7 +28,8 @@ body {
 .floating-input-bar {
   position: fixed;
   bottom: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 100%;
   background: transparent;
   z-index: 1000;
