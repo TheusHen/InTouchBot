@@ -23,7 +23,7 @@ export const metadata: Metadata = {
         shortcut: "/favicon.png",
     },
     keywords: ["InTouchBot", "TheusHen", "portfolio", "chatbot"],
-    author: "TheusHen",
+    authors: [{ name: "Matheus Henrique", url: "https://theushen.me" }],
     viewport: "width=device-width, initial-scale=1.0",
     openGraph: {
         title: "InTouchBot",
