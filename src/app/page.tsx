@@ -21,6 +21,7 @@ const InTouchBotPage = () => {
     const [conversation, setConversation] = useState<Message[]>([]);
     const [loading, setLoading] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
+    const chatAreaRef = useRef<HTMLDivElement | null>(null);
 
     const searchParams = typeof window !== "undefined"
         ? new URLSearchParams(window.location.search)
@@ -113,6 +114,7 @@ const InTouchBotPage = () => {
                     <div
                         className="flex-1 overflow-y-auto px-2 pb-3"
                         style={{ scrollbarWidth: "thin" }}
+                        ref={chatAreaRef}
                     >
                         <div className="flex flex-col gap-2 pt-2">
                             {conversation.length === 0 && !loading && (
