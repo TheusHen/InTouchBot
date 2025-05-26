@@ -44,3 +44,16 @@ body {
   overflow-y: auto;
   height: calc(100vh - 100px); /* Adjust based on the height of the input bar */
 }
+
+.chat-container {
+  height: calc(100vh - 100px); /* Adjust based on the height of the input bar */
+  overflow-y: scroll;
+}
+
+.input-container {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: var(--background);
+  z-index: 1000;
+}

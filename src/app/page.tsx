@@ -23,6 +23,7 @@ const InTouchBotPage = () => {
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
     const chatAreaRef = useRef<HTMLDivElement | null>(null);
     const [isInputBarVisible, setIsInputBarVisible] = useState(true);
+    const chatContainerRef = useRef<HTMLDivElement | null>(null);
 
     const searchParams = typeof window !== "undefined"
         ? new URLSearchParams(window.location.search)
@@ -33,6 +34,13 @@ const InTouchBotPage = () => {
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [conversation, loading]);
+
+    // Scroll to bottom of chat container when a new message is added
+    useEffect(() => {
+        if (chatContainerRef.current) {
+            chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+        }
+    }, [conversation]);
 
     // Handle prompt from /?help=
     useEffect(() => {
@@ -133,7 +141,7 @@ const InTouchBotPage = () => {
                         style={{ scrollbarWidth: "thin" }}
                         ref={chatAreaRef}
                     >
-                        <div className="flex flex-col gap-2 pt-2">
+                        <div className="flex flex-col gap-2 pt-2" ref={chatContainerRef}>
                             {conversation.length === 0 && !loading && (
                                 <div className="text-center text-gray-400 mt-16 mb-4 select-none">
                                     Ask me anything about TheusHen!
