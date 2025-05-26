@@ -8,6 +8,7 @@ import Particles from "./componets/particles";
 import { chatWithProfileLLM } from "./core/LLM/chat";
 import ReactMarkdown from "react-markdown";
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import Link from "next/link";
 
 type Message = {
     sender: "user" | "bot";
@@ -213,6 +214,13 @@ const InTouchBotPage = () => {
                     </button>
                 </div>
             </form>
+
+            {/* Documentation Link */}
+            <div className="absolute top-4 right-4">
+                <Link href="/docs" className="text-blue-500 hover:underline">
+                    Documentation
+                </Link>
+            </div>
         </div>
     );
 };
