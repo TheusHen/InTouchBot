@@ -16,6 +16,10 @@ export type CollegeAppCountdown = {
     until: string;
 };
 
+export type BlogInfo = {
+    url: string;
+};
+
 export type ProfileData = {
     profile: {
         name: string;
@@ -56,6 +60,7 @@ export type ProfileData = {
         url: string;
     }[];
     images?: { [key: string]: string };
+    blog?: BlogInfo;
 };
 
 // Fetch profile data directly from API
@@ -63,6 +68,9 @@ export async function fetchProfile(): Promise<ProfileData> {
     try {
         const response = await axios.get('https://www.theushen.me/api/about');
         const data = response.data;
+
+        // Check if the request is coming from theushen.me
+        const isTheusHenSite = response.request?.res?.responseUrl?.includes('theushen.me');
 
         // Normalize avatar/photo for compatibility
         const avatar = data.profile.photo || data.profile.avatar;
@@ -73,11 +81,13 @@ export async function fetchProfile(): Promise<ProfileData> {
             profile: {
                 ...data.profile,
                 avatar,
+                ...(isTheusHenSite ? {} : { bio: [], avatar: '', photo: '', flag: '', socials: [], hackclub: undefined, college_app_countdown: undefined })
             },
             images: {
                 profile: avatar,
                 ...(data.images || {}),
             },
+            ...(isTheusHenSite ? {} : { featuredProjects: [], githubProjects: [], contact: [], blog: undefined })
         };
     } catch (error) {
         console.error('Error fetching profile from API:', error);

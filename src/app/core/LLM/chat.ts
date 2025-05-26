@@ -100,6 +100,15 @@ function isSpecificInfoRequest(question: string): { isSpecific: boolean; type: s
         return { isSpecific: true, type: 'image', key: 'profile' };
     }
 
+    // Check for blog request
+    if (
+        normalizedQuestion.includes('blog')
+        || normalizedQuestion.includes('find the blog')
+        || normalizedQuestion.includes('where can I find the blog')
+    ) {
+        return { isSpecific: true, type: 'blog' };
+    }
+
     return { isSpecific: false, type: '' };
 }
 
@@ -161,6 +170,17 @@ function handleSpecificRequest(profileData: ProfileData, requestInfo: { type: st
                 return { text: `Here's the image you requested:`, imageUrl: profileData.images[key || ''], isMarkdown: true };
             }
             break;
+        case 'blog':
+        {
+            const blogInfo = profileData.blog;
+            if (blogInfo) {
+                return {
+                    text: `You can find the blog here: [${blogInfo.url}](${blogInfo.url})`,
+                    isMarkdown: true
+                };
+            }
+            break;
+        }
     }
 
     return { text: '' }; // Empty response if no specific info found
@@ -172,6 +192,7 @@ function getOptions(): string {
         'About',
         'Contact',
         'Avatar',
+        'Blog',
     ];
     // Remove duplicates and empty
     const uniqueOptions = [...new Set(options.filter(Boolean))];
