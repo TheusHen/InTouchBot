@@ -17,7 +17,6 @@ InTouchBot is a lightweight assistant built to integrate seamlessly with [my por
 
 Embed or run the bot on your site or app. It can be used via:
 - Custom Web UI (already live on [intouchbot.theushen.me](https://intouchbot.theushen.me))
-- API integration (coming soon)
 
 ## ⚙️ Tech Stack
 
