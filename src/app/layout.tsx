@@ -23,7 +23,7 @@ export const metadata: Metadata = {
         shortcut: "/favicon.png",
     },
     keywords: ["InTouchBot", "TheusHen", "portfolio", "chatbot"],
-    authors: [{ name: "Matheus Henrique", url: "https://theushen.me" }],
+    author: "TheusHen",
     viewport: "width=device-width, initial-scale=1.0",
     openGraph: {
         title: "InTouchBot",
@@ -74,7 +74,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <div className="floating-input-bar">
+          {children}
+        </div>
       </body>
     </html>
   );

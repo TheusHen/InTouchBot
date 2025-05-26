@@ -22,6 +22,7 @@ const InTouchBotPage = () => {
     const [loading, setLoading] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
     const chatAreaRef = useRef<HTMLDivElement | null>(null);
+    const [isInputBarVisible, setIsInputBarVisible] = useState(true);
 
     const searchParams = typeof window !== "undefined"
         ? new URLSearchParams(window.location.search)
@@ -93,6 +94,22 @@ const InTouchBotPage = () => {
         setLoading(false);
     };
 
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 100) {
+                setIsInputBarVisible(false);
+            } else {
+                setIsInputBarVisible(true);
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+
     return (
         <div className="relative flex flex-col w-full h-screen bg-gradient-to-tl from-black via-zinc-600/20 to-black overflow-hidden">
             <Particles className="absolute inset-0 -z-10 animate-fade-in" quantity={100} />
@@ -112,7 +129,7 @@ const InTouchBotPage = () => {
             <div className="flex-1 w-full flex flex-col items-center justify-end px-2 sm:px-0">
                 <div className="w-full max-w-3xl flex flex-col flex-1 overflow-hidden">
                     <div
-                        className="flex-1 overflow-y-auto px-2 pb-3"
+                        className="flex-1 overflow-y-auto px-2 pb-3 scrollable-chat-area"
                         style={{ scrollbarWidth: "thin" }}
                         ref={chatAreaRef}
                     >
@@ -182,7 +199,7 @@ const InTouchBotPage = () => {
 
             {/* Input Area, sticky at bottom */}
             <form
-                className="w-full max-w-3xl mx-auto px-2 sm:px-0 pb-6 sticky bottom-0 bg-gradient-to-t from-black/80 via-zinc-800/40 to-transparent"
+                className={`w-full max-w-3xl mx-auto px-2 sm:px-0 pb-6 floating-input-bar ${isInputBarVisible ? "" : "hidden"}`}
                 onSubmit={(e) => {
                     e.preventDefault();
                     if (!loading) handleSend();
