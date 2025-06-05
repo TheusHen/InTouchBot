@@ -12,16 +12,10 @@ import {
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
 import { chatWithProfileLLM } from "@/app/core/LLM/chat";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-
-// Utility to merge class names
-export function cn(...inputs: ClassValue[]) {
-    return twMerge(clsx(inputs));
-}
+import { cn } from "@/app/lib/utils";
 
 // Button
 const buttonVariants = cva(
