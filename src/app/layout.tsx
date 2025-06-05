@@ -7,7 +7,8 @@ export const metadata: Metadata = {
         default: "InTouchBot",
         template: "%s | InTouchBot",
     },
-    description: "InTouchBot for TheusHen's portfolio",
+    description: "Meet InTouch AI Assistant, your personal guide to explore TheusHen's portfolio.",
+    keywords: "TheusHen, portfolio, AI assistant, web development, React, TypeScript, JavaScript, frontend developer, chatbot, AI, machine learning, tech portfolio",
     robots: {
         index: true,
         follow: true,
@@ -20,7 +21,29 @@ export const metadata: Metadata = {
         },
     },
     icons: {
-        shortcut: "/favicon.png",
+        shortcut: "https://www.theushen.me/favicon.ico",
+    },
+    openGraph: {
+        title: "InTouchBot - TheusHen's Portfolio",
+        description: "Meet InTouch AI Assistant, your personal guide to explore TheusHen's portfolio.",
+        url: "https://intouchbot.theushen.me",
+        siteName: "TheusHen",
+        images: [
+            {
+                url: "https://intouchbot.theushen.me/banner.jpg",
+                width: 780,
+                height: 400,
+                alt: "Banner - InTouchBot",
+            },
+        ],
+        locale: "en_US",
+        type: "website",
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "InTouchBot - TheusHen's Portfolio",
+        description: "Meet InTouch AI Assistant, your personal guide to explore TheusHen's portfolio.",
+        images: ["https://intouchbot.theushen.me/banner.jpg"],
     },
 };
 
@@ -49,3 +72,4 @@ export default function RootLayout({
     </html>
   );
 }
+
